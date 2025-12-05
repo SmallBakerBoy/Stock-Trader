@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'StockTrader.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'NEA Database',
+        'NAME': 'Django',
         'USER': 'root',
         'PASSWORD': 'kbf6shVLQten8a',
         'HOST': 'localhost',   

@@ -4,16 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' href='{% static "base.css" %}'>
+    <link rel='stylesheet' href='{% static "css/base.css" %}'>
+    {% block css %}{% endblock %}
+    <script src='{% static "js/base.js" %}'></script>
+    {% block js %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
-    <div class="navbar"><h1>B.C.S Asset Manager</h1></div>
+    <div class="navbar"><h1>Asset Manager</h1></div>
     <div class='navbar'>
-        <a>Home</a>
-        <a>Watchlist</a>
-        <a>Assets</a>
-        <a>Account</a>
+        <a href='/home'>Home</a>
+        <a href='/watchlist'>Watchlist</a>
+        <a href='/assets'>Assets</a>
+        <a href='/account'>Account</a>
     </div>
     {% block body %}
     {% endblock %}
