@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.shortcuts import render
 
 # Create your views here.
 def home(request):
@@ -8,14 +9,6 @@ def home(request):
 
 def landing(request):
     template = loader.get_template('landing.html')
-    return HttpResponse(template.render())
-
-def login(request):
-    template = loader.get_template('login.html')
-    return HttpResponse(template.render())
-
-def signup(request):
-    template = loader.get_template('signup.html')
     return HttpResponse(template.render())
 
 def assets(request):
@@ -29,3 +22,10 @@ def watchlist(request):
 def account(request):
     template = loader.get_template('account.html')
     return HttpResponse(template.render())
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = CreateAccount(request.POST)
+    else:
+        form = CreateAccount()
+    return render(request,'registration/sign_up.html',{'form':form})

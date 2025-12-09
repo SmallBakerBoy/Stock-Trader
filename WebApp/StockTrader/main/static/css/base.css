@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'libre-baskerville';
-    src: url('../static/fonts/libre-baskerville.regular.ttf') format('truetype');
+    src: url('../fonts/libre-baskerville.regular.ttf') format('truetype');
 }
 
 body{
@@ -121,6 +121,7 @@ form{
     width: 100%;
 
     text-decoration: none;
+    
     color: #1c75ce;
     
     align-items: right;
@@ -149,6 +150,7 @@ form{
     height: 100%;
 
     color: #ffffff;
+    text-decoration: none;
 }
 
 .navbar a:hover{

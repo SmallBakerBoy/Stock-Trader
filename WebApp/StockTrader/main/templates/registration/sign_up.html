@@ -9,7 +9,8 @@
 {% block body %} 
       <div class="larger_container">
         <div class='title'><h2>Sign Up</h2></div>
-        <form>
+        <form method='post'>
+            {%  csrf_token %}
             <input type="text" placeholder="Username" class="text-input" id='username'>
             <input type="password" placeholder="Password" class="text-input" id='password'>
             <span><a class="link">Forgot Password?</a></span>
