@@ -1,16 +1,6 @@
 from django.db import models
 
 # Create your models here.
-class user(models.Model):
-    UserID = models.AutoField(auto_created=True, primary_key=True, verbose_name='UID')
-    Username = models.CharField(max_length=32)
-    Password = models.CharField(max_length=128)
-   
-    Email = models.EmailField()
-    Phone = models.CharField(max_length=15)
-   
-    Balance = models.FloatField(default=1000.0)
-    Profit = models.FloatField(default = 0.0)
 
 class watchlist(models.Model):
     Ticker = models.CharField(max_length=5)
