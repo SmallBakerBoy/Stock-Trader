@@ -9,10 +9,16 @@
 {% block body %} 
       <div class="larger_container" style='height:1000px;'>
         <div class='title'><h2>Sign Up</h2></div>
+        {% if user.is_authenticated %}
+        <h1>You're already signed in!</h1>
+        <a href='/home'>Navigate to home page here</a>
+        {% else %}
         <form method='post'>
             {%  csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="submit">Submit</button>
         </form>
+        {% endif %}
+        
     </div>
 {% endblock %}

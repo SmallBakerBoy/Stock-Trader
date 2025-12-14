@@ -1,31 +1,38 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class watchlist(models.Model):
-    Ticker = models.CharField(max_length=5)
-    User = models.IntegerField()
-    Watchlist = models.IntegerField()
+    ticker = models.CharField(max_length=5)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    watchlist = models.IntegerField()
 
 class blacklist(models.Model):
-    Ticker = models.CharField(max_length=5)
-    User = models.IntegerField()
+    ticker = models.CharField(max_length=5)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('user', 'ticker')
 
 class trades(models.Model):
-    TradeID = models.AutoField(auto_created=True, primary_key=True, verbose_name='TID')
-    Ticker = models.CharField(max_length=5)
+    tradeID = models.AutoField(auto_created=True, primary_key=True, verbose_name='TID')
+    ticker = models.CharField(max_length=5)
 
-    Type = models.BooleanField()
-    Amount = models.FloatField()
+    User = models.ForeignKey(User, on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
 
-    BuyPrice = models.FloatField()
-    SellPrice = models.FloatField()
-    Profit = models.FloatField()
+    type = models.BooleanField()
+    amount = models.FloatField()
+
+    buyPrice = models.FloatField()
+    sellPrice = models.FloatField()
+    profit = models.FloatField()
 
 
 class assets(models.Model):
-    Ticker = models.CharField(max_length=5)
-    User = models.IntegerField()
+    ticker = models.CharField(max_length=5)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    Amount = models.FloatField()
-    Price = models.FloatField()
+    amount = models.FloatField()
+    price = models.FloatField()

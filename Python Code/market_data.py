@@ -81,8 +81,12 @@ def get_market_data(tickers):
         if check_cache(i,1) == True:
            market_data.append([i,cached_data[i].market_data]) 
            tickers.remove(i)
-    market_data = yf.download(tickers,auto_adjust=True,period='5y')['Close']
+    market_data = yf.download(tickers,auto_adjust=True,period='3y')['Close']
     cache_data(market_data)
     return market_data
 
+def format_market_data(market_data):
+    close_prices = pd.DataFrame({ticker: market_data[ticker].values for ticker in market_data})
+    daily_returns = close_prices.pct_change()
+    return daily_returns.dropna()
 

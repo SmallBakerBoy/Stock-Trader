@@ -2,28 +2,42 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from .forms import CreateAccount
+from django.contrib.auth.decorators import login_required
+
+from .forms import CreateAccount,BlacklistCompany
+from .models import blacklist
 
 # Create your views here.
+@login_required(login_url='/login')
 def home(request):
-    template = loader.get_template('home.html')
-    return HttpResponse(template.render())
+    return render(request, 'home.html')
 
 def landing(request):
     template = loader.get_template('landing.html')
     return HttpResponse(template.render())
 
+@login_required(login_url='/login')
 def assets(request):
-    template = loader.get_template('assets.html')
-    return HttpResponse(template.render())
+    return render(request, 'assets.html')
 
+@login_required(login_url='/login')
 def watchlist(request):
-    template = loader.get_template('watchlist.html')
-    return HttpResponse(template.render())
+    return render(request, 'watchlist.html')
 
+@login_required(login_url='/login')
 def account(request):
-    template = loader.get_template('account.html')
-    return HttpResponse(template.render())
+    blacklisted = blacklist.objects.filter(user = request.user)
+    if request.method == 'POST':
+        form = BlacklistCompany(request.POST, user = request.user)
+        if form.is_valid():
+            new_blacklist = form.save(commit=False)
+            new_blacklist.user = request.user
+            new_blacklist.save()
+            return redirect('/account')
+    else:
+        form = BlacklistCompany(user = request.user)
+
+    return render(request, 'account.html',{'form':form, 'blacklisted':blacklisted})
 
 def signup(request):
     if request.method == 'POST':

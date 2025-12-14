@@ -13,3 +13,6 @@ Colour Palette for website design - https://coolors.co/1c75ce-f8f9fa-e9ecef-dee2
             <button type="submit" class="submit">Submit</button>
             <span><a class="link" href='/login'>Already have an account? Login</a></span>
             <span class='error'></span>
+
+<input type="text" placeholder="Username" class="text-input" id='username'>
+            <input type="password" placeholder="Password" class="text-input" id='password'>
