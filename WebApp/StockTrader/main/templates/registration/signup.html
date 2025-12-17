@@ -7,7 +7,7 @@
 {% block js %}<script src='{% static "js/login.js" %}'></script>{% endblock %}
 
 {% block body %} 
-      <div class="larger_container" style='height:1000px;'>
+      <div class="larger_container">
         <div class='title'><h2>Sign Up</h2></div>
         {% if user.is_authenticated %}
         <h1>You're already signed in!</h1>

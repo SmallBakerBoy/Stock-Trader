@@ -4,9 +4,9 @@
 
 {% block body %} 
 
-<h1>Hi</h1>
+<h1>Account</h1>
 
-<div>
+<div class='larger_container'>
     <h1>Your black list</h1>
     <div>
         <ul>
@@ -14,7 +14,7 @@
             <li>{{company.ticker}}</li>
         {% endfor %}
         </ul>
-        <p>Add new company</p>
+        <h3>Add new company</h3>
         <form method='POST'>
             {% csrf_token %}
             {{ form.as_p }}

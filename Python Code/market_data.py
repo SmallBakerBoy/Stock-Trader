@@ -87,6 +87,10 @@ def get_market_data(tickers):
 
 def format_market_data(market_data):
     close_prices = pd.DataFrame({ticker: market_data[ticker].values for ticker in market_data})
+    
+    sufficient_data = close_prices.columns[close_prices.count() > 0.7*len(close_prices)]
+    close_prices = close_prices[sufficient_data]
+
     daily_returns = close_prices.pct_change()
     return daily_returns.dropna()
 

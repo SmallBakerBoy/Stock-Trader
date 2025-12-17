@@ -15,12 +15,21 @@
         {% else %}
         <form method='post'>
             {%  csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="submit">Submit</button>
-            <span><a class="link">Forgot Password?</a></span>
+            <div class="form">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {{ form.username.errors }}
+            </div>
+
+            <div class="form">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+                <span><a class="link">Forgot Password?</a></span>
+                {{ form.password.errors }}
+            </div>
+
             <button type="submit" class="submit">Submit</button>
             <span><a class="link" href='/signup'>Don't Have an account? Create one</a></span>
-            <span class='error'></span>
         </form>
         {% endif %}
     </div>

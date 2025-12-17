@@ -12,6 +12,14 @@ class CreateAccount(UserCreationForm):
         model = User
         fields = ['username','email']
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+
+        if len(username)<7 or len(username)>17:
+            raise forms.ValidationError('The username is not valid, it must be between 8 and 16 alphanumeric characters')
+        return username
+
+
 class BlacklistCompany(forms.ModelForm):
     ticker = forms.CharField(max_length=5)
 
@@ -28,19 +36,4 @@ class BlacklistCompany(forms.ModelForm):
 
         if blacklist.objects.filter(user=self.user, ticker=ticker).exists():
             raise forms.ValidationError("You already added this ticker.")
-
-
-
-
-
-
-'''class user(models.Model):
-    UserID = models.AutoField(auto_created=True, primary_key=True, verbose_name='UID')
-    Username = models.CharField(max_length=32)
-    Password = models.CharField(max_length=128)
-   
-    Email = models.EmailField()
-    Phone = models.CharField(max_length=15)
-   
-    Balance = models.FloatField(default=1000.0)
-    Profit = models.FloatField(default = 0.0)'''
+        return ticker.upper()

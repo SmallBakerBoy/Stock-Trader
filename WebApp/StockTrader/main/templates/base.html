@@ -9,14 +9,19 @@
     <script src='{% static "js/base.js" %}'></script>
     {% block js %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static favicon.png %}">
 </head>
 <body>
-    <div class="navbar">
+    <div class="navbar" id='logo'>
         <h1>Asset Manager</h1>
         {% if user.is_authenticated %}
         <p>Current User: {{user.username}}</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button id='logout'>Logout</button>
+        </form>
         {% else %}
-        <a href='/login'>Not Currently logged in</a>
+        <a style='' href='/login'>Not Currently logged in</a>
         {% endif %}
     </div>
     <div class='navbar'>
