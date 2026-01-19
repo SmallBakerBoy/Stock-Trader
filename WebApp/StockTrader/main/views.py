@@ -5,24 +5,27 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
 from .forms import CreateAccount,BlacklistCompany
-from .models import blacklist
+from .models import blacklist,assets,watchlist
 
 # Create your views here.
 @login_required(login_url='/login')
 def home(request):
-    return render(request, 'home.html')
+    user_assets = assets.objects.filter(user = request.user)
+    return render(request, 'home.html',{'assets':user_assets})
 
 def landing(request):
     template = loader.get_template('landing.html')
     return HttpResponse(template.render())
 
 @login_required(login_url='/login')
-def assets(request):
-    return render(request, 'assets.html')
+def asset(request):
+    user_asset = assets.objects.filter(user = request.user)
+    return render(request, 'assets.html',{'assets':user_asset})
 
 @login_required(login_url='/login')
-def watchlist(request):
-    return render(request, 'watchlist.html')
+def watchlists(request):
+    watchlist_items = watchlist.objects.filter(user = request.user)
+    return render(request, 'watchlist.html',{'watchlist':watchlist_items})
 
 @login_required(login_url='/login')
 def account(request):

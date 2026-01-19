@@ -1,6 +1,8 @@
 import market_data as md
 import database as db
 
+import random
+
 import pandas as pd
 import numpy as np
 
@@ -61,10 +63,15 @@ def create_portfolio(user):
 
     clusters = create_clusters(market_data,components,8)
     
+    #risk_max = db.get_user_risk()
 
+    for i in clusters:
+        random.shuffle(i)
+        for j in range(5):
+            print(i[j])
     
     
-print(create_portfolio(2))
+print(create_portfolio(2)) 
 
 
 

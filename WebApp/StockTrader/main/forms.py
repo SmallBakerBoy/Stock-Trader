@@ -1,5 +1,5 @@
 from django import forms
-from .models import blacklist
+from .models import blacklist,user_settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -37,3 +37,9 @@ class BlacklistCompany(forms.ModelForm):
         if blacklist.objects.filter(user=self.user, ticker=ticker).exists():
             raise forms.ValidationError("You already added this ticker.")
         return ticker.upper()
+    
+class UpdateRisk(forms.ModelForm):
+    class Meta:
+        model = user_settings
+        fields = ['risk_level','ideal']
+    

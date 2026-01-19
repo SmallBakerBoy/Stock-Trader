@@ -2,6 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+class user_settings(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    risk_level = models.IntegerField()
+    ideal = models.BooleanField()
 
 class watchlist(models.Model):
     ticker = models.CharField(max_length=5)

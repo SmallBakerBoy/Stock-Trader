@@ -3,5 +3,10 @@
 {% block title %} Watchlist {% endblock %}
 
 {% block body %} 
+    {% with current_watchlist=1  %}
 
+    {% for company in watchlist %}
+        {% if {{company.watchlist}} == current_watchlist  %}
+            <li>{{company.ticker}}</li>
+    {% endfor %}
 {% endblock %}
