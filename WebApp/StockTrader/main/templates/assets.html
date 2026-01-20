@@ -3,5 +3,7 @@
 {% block title %} Assets {% endblock %}
 
 {% block body %} 
-     
+    {% for asset in assets %}       
+        <li>{{asset.ticker}}</li>
+    {% endfor %}
 {% endblock %}

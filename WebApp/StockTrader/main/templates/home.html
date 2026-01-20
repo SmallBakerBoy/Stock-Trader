@@ -21,21 +21,40 @@
     {% if assets %}
         <h1>Suggested Trades</h1>
             <table><tr>
-            <td><div class="container" style="width: 300px; height: 300px; background-color: #dbedd3;">
+            <td><div class="container" style="height: 300px; background-color: #dbedd3;">
                 <h1>Buy Suggestions</h1>
+                <ul>
+                {% for trade in trades %}
+                    {% if trade.type == 1 %}
+                    <li>{{trade.ticker}}</li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
             </div></td>
-            <td><div class="container" style="width: 300px; height: 300px; background-color: #f4cdcc;">
+            <td><div class="container" style="height: 300px; background-color: #f4cdcc;">
                 <h1>Sell Suggestions</h1>
+                <ul>
+                {% for trade in trades %}
+                    {% if trade.type == 0 %}
+                    <li>{{trade.ticker}}</li>
+                    {% endif %}
+                {% endfor %}
+                </ul>
             </div></td>
         </tr></table>
+        <form method='POST'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="submit">Update Portfolio</button>
+            </form>
     {% else %}
         <div class='container'>
             <p> You do not have any registered assets.</p>
             <form method='POST'>
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="submit">Submit</button>
-        </form>
+            <button type="submit" class="submit">Create Portfolio</button>
+            </form>
         </div>
     {% endif %}
 

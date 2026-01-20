@@ -5,13 +5,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
 from .forms import CreateAccount,BlacklistCompany
-from .models import blacklist,assets,watchlist
+from .models import blacklist,assets,watchlist_items,trades
 
 # Create your views here.
 @login_required(login_url='/login')
 def home(request):
     user_assets = assets.objects.filter(user = request.user)
-    return render(request, 'home.html',{'assets':user_assets})
+    user_trades = trades.objects.filter(user = request.user)
+    return render(request, 'home.html',{'assets':user_assets,'trades':user_trades})
 
 def landing(request):
     template = loader.get_template('landing.html')
@@ -19,13 +20,13 @@ def landing(request):
 
 @login_required(login_url='/login')
 def asset(request):
-    user_asset = assets.objects.filter(user = request.user)
+    user_asset = assets.objects.filter(user = request.user)                                                                                                                                          
     return render(request, 'assets.html',{'assets':user_asset})
 
 @login_required(login_url='/login')
 def watchlists(request):
-    watchlist_items = watchlist.objects.filter(user = request.user)
-    return render(request, 'watchlist.html',{'watchlist':watchlist_items})
+    watchlist_list = watchlist_items.objects.filter(user = request.user)
+    return render(request, 'watchlist.html',{'watchlists':watchlist_list})
 
 @login_required(login_url='/login')
 def account(request):

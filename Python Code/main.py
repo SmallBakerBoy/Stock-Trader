@@ -70,7 +70,9 @@ def create_portfolio(user):
         for j in range(5):
             print(i[j])
     
-    
+def update_portfolio(user):
+    pass
+
 print(create_portfolio(2)) 
 
 

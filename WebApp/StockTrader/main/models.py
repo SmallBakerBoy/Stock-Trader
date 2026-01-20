@@ -7,7 +7,7 @@ class user_settings(models.Model):
     risk_level = models.IntegerField()
     ideal = models.BooleanField()
 
-class watchlist(models.Model):
+class watchlist_items(models.Model):
     ticker = models.CharField(max_length=5)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     watchlist = models.IntegerField()
@@ -23,7 +23,7 @@ class trades(models.Model):
     tradeID = models.AutoField(auto_created=True, primary_key=True, verbose_name='TID')
     ticker = models.CharField(max_length=5)
 
-    User = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     time = models.DateTimeField(auto_now_add=True)
 
     type = models.BooleanField()
