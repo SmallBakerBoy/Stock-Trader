@@ -2,8 +2,23 @@
 
 {% block title %} Assets {% endblock %}
 
-{% block body %} 
+{% block body %}
+    <div class='grid-for-sidebar'>
+        <div class='sidenav'> 
+            <input type='text' placeholder='Search for company'>
+        </div>
+    <div>
     {% for asset in assets %}       
-        <li>{{asset.ticker}}</li>
+    <div class='company'>
+        <h1>{{asset.ticker|upper}}</h1>
+        <h2>{{asset.amount}} │ ${{asset.price}}</h2>
+        <div class='action'>
+            <button function='buy()' style='border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: 0.5px solid #ffffff; cursor: pointer;'>Buy</button>
+            <button function='sell()' style='border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: 0.5px solid #ffffff; cursor: pointer;'>Sell</button>
+        </div>
+        <button function='toggle_dropdown()' class='dropdown'>⌄</button>
+    </div>
     {% endfor %}
+    </div>
+
 {% endblock %}

@@ -10,13 +10,14 @@ body{
 
     color: white;
 
-    
+    margin: 0px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
 
     overflow: auto;
+    overflow-x: hidden;
 }
 
 h1{
@@ -24,6 +25,7 @@ h1{
     font-size: 3rem;
 
     color: #ffffff;
+    text-align: center;
 }
 
 h2{
@@ -33,6 +35,7 @@ h2{
     color: #212529;
 }
 
+
 form{
     display: flex;
     flex-direction: column;
@@ -41,6 +44,34 @@ form{
 
     width: 100%;
     height: 100%;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.form input {
+    width: 80%;
+    height: 40px;
+    padding: 10px;
+
+    border-radius: 10px;
+    border: 1px solid #ccc;
+
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.form input:focus {
+    outline: none;
+    border-color: #1c75ce;
+    box-shadow: 0 0 0 2px rgba(28, 117, 206, 0.3);
+}
+
+li{
+    list-style: none;
 }
 
 .container{
@@ -74,13 +105,43 @@ form{
 }
 
 .larger_container form{
-    max-height: 50vh;
+    height: auto;
+}
+
+.company{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+    background-color: #CED4DA;
+
+    width:90%;
+
+    padding: 10px;
+    margin: 10px;
+
+    border-radius: 10px;
+}
+
+.company h1{
+    color: #6C757D;
+}
+
+.company h2{
+    color: #6C757D;
+}
+
+.dropdown{
+    border: none;
+    background-color: #CED4DA;
+    font-size: 50px;
 }
 
 .submit{
     width: 100%;
     height: 40px;
 
+    cursor: pointer;
     background-color: #1c75ce;
     color: #ffffff;
 
@@ -94,9 +155,13 @@ form{
     font-size: 1rem;
 }
 
+.submit :hover {
+    opacity: 0.9;
+}
+
 .navbar{
     width: 100%;
-    height: 60px;
+    height: 9vh;
 
     display: flex;
     align-items: center;
@@ -105,6 +170,85 @@ form{
 
     background-color: #6C757D;
 }
+
+.grid-for-sidebar{
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap:25px;
+}
+
+.accounts-grid{
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+
+    min-height: 100%;
+}
+
+.sidenav{
+    display: flex;
+
+    min-height: 82vh;
+    height:100%;
+
+    width:25vw;
+    z-index: 1;
+    float: left;
+
+    left: 0;
+
+    display: flex;
+    position: sticky;
+    overflow-x: hidden;
+
+    background-color: #E9ECEF;
+}
+
+.sidenav input{
+    width: 80%;
+    height: 30px;
+
+    margin: 10%;
+
+}
+
+.sidenav ul{
+    list-style: none;
+
+    width: 100%;
+    height: 50px;
+    padding: 0px;
+    margin: 0px;
+
+}
+
+.sidenav li{
+    width: 100%;
+    height: 50px;
+}
+
+.sidenav ul button{
+    width: 100%;
+    height: 100%;
+
+    background-color: #CED4DA;
+
+    border: none;
+    text-align: left;
+}
+
+.sidenav ul button:hover{
+    width: 100%;
+    height: 100%;
+
+    background-color: #ADB5BD;
+
+    border: none;
+    text-align: left;
+}
+
+
 
 #logo{
     justify-content: center;
@@ -152,5 +296,30 @@ form{
 
 .navbar a:hover{
     background-color: #495057;
+}
+
+.action{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    border: 1px solid #ffffff;
+    border-radius: 20px;
+}
+
+.action button{
+    background-color: #1C75CE;
+    border: none;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.action button:hover{
+    opacity: 0.9;
 }
 

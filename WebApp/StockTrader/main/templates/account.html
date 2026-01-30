@@ -5,23 +5,51 @@
 {% block body %} 
 
 <h1>Account</h1>
-
-<div class='larger_container'>
-    <h1>Your black list</h1>
-    <div>
+<div class='accounts-grid'>
+    <div class='larger_container'>
+        <h1>Your Account Information</h1>
         <ul>
-        {% for company in blacklisted %}
-            <li>{{company.ticker}}</li>
-        {% endfor %}
+            <li><p> Username : {{user.username}}</p></li>
+            <li><p> Email : {{user.email}}</p></li>
+            <li><div>
+                <p> Portfolio Acceptable Risk: </p>
+                <input type='range' class='slider' id='slider' min=0 max=100>
+                <p id='slider-output'></p>
+            </div></li>
         </ul>
-        <h3>Add new company</h3>
-        <form method='POST'>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="submit">Submit</button>
-        </form>
+        <button type="submit" class="submit">Update Information</button>
+    </div>
+    <div class='larger_container'>
+        <h1>Your Blacklist</h1>
+        <div>
+            <ul>
+            {% for company in blacklisted %}
+                <li>{{company.ticker}}</li>
+            {% endfor %}
+            </ul>
+            <h3>Add new company</h3>
+            <form method='POST' class='form'>
+                {% csrf_token %}
+                {{ form.ticker.label_tag }}
+                {{ form.ticker }}
+                {{ form.ticker.errors }}
+                <button type="submit" class="submit">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
 
+<script>
+    var slider = document.getElementById('slider')
+    var output = document.getElementById('slider-output')
+    output.innerHTML = slider.value
+
+    slider.oninput = output_value()
+
+    function output_value() {
+        output.innerHTML = slider.value
+    }
+</script>
 
 {% endblock %}
+

@@ -77,6 +77,7 @@ def load_cache(cached_data):
 
 def get_market_data(tickers):
     market_data=[]
+    tickers.append('^GSPC')
     for i in tickers:
         if check_cache(i,1) == True:
            market_data.append([i,cached_data[i].market_data]) 

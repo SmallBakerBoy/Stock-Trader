@@ -26,7 +26,7 @@
                 <ul>
                 {% for trade in trades %}
                     {% if trade.type == 1 %}
-                    <li>{{trade.ticker}}</li>
+                    <li>{{trade.ticker}} - {{trade.amount}}</li>
                     {% endif %}
                 {% endfor %}
                 </ul>
@@ -36,7 +36,7 @@
                 <ul>
                 {% for trade in trades %}
                     {% if trade.type == 0 %}
-                    <li>{{trade.ticker}}</li>
+                    <li>{{trade.ticker}} - {{trade.amount}}</li>
                     {% endif %}
                 {% endfor %}
                 </ul>
@@ -45,7 +45,7 @@
         <form method='POST'>
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="submit">Update Portfolio</button>
+            <button type="button" class="submit" onclick='update_portfolio()'>Update Portfolio</button>
             </form>
     {% else %}
         <div class='container'>
@@ -53,10 +53,35 @@
             <form method='POST'>
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="submit">Create Portfolio</button>
+            {% csrf_token %}
+            <button type="button" class="submit" onclick='create_portfolio()'>Create Portfolio</button>
             </form>
         </div>
     {% endif %}
+
+<script>
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    function create_portfolio() {
+        var settings = {}
+        fetch('/home/create',
+            {method: 'POST',
+             headers: {'Content-type':'application/json','X-CSRFToken': csrftoken},
+             body: JSON.stringify(settings)
+        }
+        )
+    }
+
+    function update_portfolio() {
+        var settings = {}
+        fetch('/home/create',
+            {method: 'POST',
+             headers: {'Content-type':'application/json','X-CSRFToken': csrftoken},
+             body: JSON.stringify(settings)
+        }
+        )
+    }
+</script>
 
 {% endblock %}
 

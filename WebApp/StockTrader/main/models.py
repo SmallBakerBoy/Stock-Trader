@@ -29,10 +29,6 @@ class trades(models.Model):
     type = models.BooleanField()
     amount = models.FloatField()
 
-    buyPrice = models.FloatField()
-    sellPrice = models.FloatField()
-    profit = models.FloatField()
-
 
 class assets(models.Model):
     ticker = models.CharField(max_length=5)

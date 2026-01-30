@@ -69,7 +69,6 @@ def select_companies(data,clusters,company_amount):
             results.append(mapping[sharpe_ratios[i]])
     return results
 
-
    
 
 
