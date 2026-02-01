@@ -108,7 +108,7 @@ def weight_conversion(data,weights,budget):
     return investments
 
 def queue(settings):
-    print(settings)
+    print((settings))
     return 'OK',200
 
 def create_portfolio(user):

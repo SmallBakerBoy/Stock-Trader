@@ -1,7 +1,7 @@
 import mysql.connector as mysql
 import datetime
 
-db = mysql.connect(host='localhost',user='root',passwd='kbf6shVLQten8a',database='Django') 
+db = mysql.connect(host='localhost',user='root',passwd='kbf6shVLQten8a',database='stocktrader') 
 cursor = db.cursor()
 
 def fetch_blacklist(user):

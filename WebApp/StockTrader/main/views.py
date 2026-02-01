@@ -13,6 +13,7 @@ from .Trading_Algorithm.main import queue
 @login_required(login_url='/login')
 def home(request):
     user_assets = assets.objects.filter(user = request.user)
+    user_watchlist = watchlist_items.objects.filter(user = request.user)
     user_trades = trades.objects.filter(user = request.user)        
     return render(request, 'home.html',{'assets':user_assets,'trades':user_trades})
 

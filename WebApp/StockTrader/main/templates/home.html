@@ -18,7 +18,7 @@
 
     
 
-    {% if assets %}
+    {% if assets or trades %}
         <h1>Suggested Trades</h1>
             <table><tr>
             <td><div class="container" style="height: 300px; background-color: #dbedd3;">
@@ -44,6 +44,7 @@
         </tr></table>
         <form method='POST'>
             {% csrf_token %}
+            <input type="hidden" id="user-id" value="{{ user.id }}">
             {{ form.as_p }}
             <button type="button" class="submit" onclick='update_portfolio()'>Update Portfolio</button>
             </form>
@@ -52,36 +53,12 @@
             <p> You do not have any registered assets.</p>
             <form method='POST'>
             {% csrf_token %}
+            <input type="hidden" id="user-id" value="{{ user.id }}">
             {{ form.as_p }}
-            {% csrf_token %}
             <button type="button" class="submit" onclick='create_portfolio()'>Create Portfolio</button>
             </form>
         </div>
     {% endif %}
-
-<script>
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-    function create_portfolio() {
-        var settings = {}
-        fetch('/home/create',
-            {method: 'POST',
-             headers: {'Content-type':'application/json','X-CSRFToken': csrftoken},
-             body: JSON.stringify(settings)
-        }
-        )
-    }
-
-    function update_portfolio() {
-        var settings = {}
-        fetch('/home/create',
-            {method: 'POST',
-             headers: {'Content-type':'application/json','X-CSRFToken': csrftoken},
-             body: JSON.stringify(settings)
-        }
-        )
-    }
-</script>
 
 {% endblock %}
 

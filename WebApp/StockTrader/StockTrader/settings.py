@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'StockTrader.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'Django',
+        'NAME': 'stocktrader',
         'USER': 'root',
         'PASSWORD': 'kbf6shVLQten8a',
         'HOST': 'localhost',   
@@ -118,6 +118,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
+
+AUTH_USER_MODEL = 'main.User'
 
 STATIC_URL = 'static/'
 

@@ -9,6 +9,7 @@
             {% for list in watchlists %}  
                 <li><button type='radio' id='{{list}}' function='switch_watchlist()'> Watchlist {{list}}</button></li>
             {% endfor %}
+            <li><button function='add_watchlist()'> + Add Watchlist</button></li>
             </ul>
         </div>    
     <ul id='watchlist'>
@@ -29,13 +30,5 @@
     </ul>
     </div>
 
-<script>
-    function switch_watchlist(){
-        var xhttp = new XMLHttpRequest();
-
-    
-        document.getElementById('watchlist').innerHTML = "{% for company in watchlist_items %}<div class='company'> <h1>{{company.ticker|upper}}</h1> <div class='action'><button function='buy()' style='border-radius: 20px; width:100%; grid-column: span 2;'>Buy</button></div><button function='toggle_dropdown()' class='dropdown'>⌄</button></div>{% endfor %}"
-    }
-</script>
 {% endblock %}
 
