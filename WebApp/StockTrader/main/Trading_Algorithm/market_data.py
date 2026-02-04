@@ -1,4 +1,5 @@
 import yfinance as yf
+import finnhub as fh
 import requests
 
 import pandas as pd
@@ -6,8 +7,10 @@ import bs4 as bs
 import numpy as np
 
 import datetime
+import json
 
 #Format of dictionary is Key = Ticker, Value = object
+fh_client = fh.Client(api_key="d5r3eo9r01qqqlh9irjgd5r3eo9r01qqqlh9irk0")
 cached_data = {}
 
 class company():
@@ -27,6 +30,22 @@ class company():
         self.lastupdate = datetime.datetime.now()
 
     def update(self):
+        pass
+
+def get_company_info(data):
+    try:
+        decoded = data.decode('utf-8').replace("'",'"')
+        body = json.loads(decoded)
+
+        ticker = yf.Ticker(body['ticker'])
+        company_data = ticker.history().iloc[-1]
+
+        if type(company_data) == None:
+            raise Exception
+
+        return company_data.to_dict()
+    
+    except:
         pass
 
 
@@ -94,4 +113,19 @@ def format_market_data(market_data):
 
     daily_returns = close_prices.pct_change()
     return daily_returns.dropna()
+
+def api_search(query):
+    try:
+        decoded = query.decode('utf-8').replace("'",'"')
+        body = json.loads(decoded)
+
+        lookup = fh_client.symbol_lookup(body['query'])
+
+        SP500 = list(get_sp500().values())
+        companies = [x['symbol'] for x in lookup['result'] if x['symbol'] in SP500]
+
+        return companies
+    except:
+        pass
+    
 

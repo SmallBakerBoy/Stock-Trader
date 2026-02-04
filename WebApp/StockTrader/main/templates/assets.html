@@ -5,20 +5,35 @@
 {% block body %}
     <div class='grid-for-sidebar'>
         <div class='sidenav'> 
-            <input type='text' placeholder='Search for company'>
+            <input type='text' onkeyup='dynamic_search(this.value)' placeholder='Search for company' id='searchbar'>
+            <div id='search_results'>
+            </div>
         </div>
     <div>
-    {% for asset in assets %}       
-    <div class='company'>
-        <h1>{{asset.ticker|upper}}</h1>
-        <h2>{{asset.amount}} │ ${{asset.price}}</h2>
-        <div class='action'>
-            <button function='buy()' style='border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: 0.5px solid #ffffff; cursor: pointer;'>Buy</button>
-            <button function='sell()' style='border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: 0.5px solid #ffffff; cursor: pointer;'>Sell</button>
+    {% for asset in assets %}   
+    <li>    
+        <div class='company'>
+            <h1>{{asset.ticker|upper}}</h1>
+            <h2>{{asset.amount}} │ ${{asset.price}}</h2>
+            <div class='action'>
+                <button onclick='buy()' style='border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: 0.5px solid #ffffff; cursor: pointer;'>Buy</button>
+                <button onclick='sell()' style='border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: 0.5px solid #ffffff; cursor: pointer;'>Sell</button>
+            </div>
+            <button onclick='toggle_dropdown("{{asset.ticker|upper}}")' class='dropdown'>⌄</button>
         </div>
-        <button function='toggle_dropdown()' class='dropdown'>⌄</button>
-    </div>
+        <div class='dropdown_box' id='{{asset.ticker|upper}}-dropdown' hidden> 
+            <div>
+                <h3> Stock Information </h3>
+                    <div id='{{asset.ticker|upper}}-info'></div>
+                <h3> Indicators </h3>
+            </div>
+            <div>
+                <iframe frameBorder='0' scrolling='no' width='100%' height='400' src='https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=CED8C4CE4F4E4FF0BDE9C4455A6EE38F&symbol={{asset.ticker|upper}}&addVolume=false&dividends=true&splits=true&palette=Financial-Light'></iframe>
+            </div>
+        </div>
+    </li>
     {% endfor %}
     </div>
 
 {% endblock %}
+

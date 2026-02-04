@@ -2,6 +2,8 @@ from .market_data import get_sp500,get_market_data,format_market_data
 from .database import get_user_risk,fetch_blacklist,save_trades
 
 import pandas as pd
+import json
+
 import numpy as np
 import yfinance as yf
 
@@ -108,7 +110,8 @@ def weight_conversion(data,weights,budget):
     return investments
 
 def queue(settings):
-    print((settings))
+    decoded = settings.decode('utf-8').replace("'",'"')
+    body = json.loads(decoded)
     return 'OK',200
 
 def create_portfolio(user):

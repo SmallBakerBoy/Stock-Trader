@@ -41,4 +41,7 @@ class BlacklistCompany(forms.ModelForm):
             raise forms.ValidationError("You already added this ticker.")
         return ticker.upper()
     
+class AccountInfo(forms.ModelForm):
+    pass
+    
     

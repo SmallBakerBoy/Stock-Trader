@@ -8,16 +8,22 @@
 <div class='accounts-grid'>
     <div class='larger_container'>
         <h1>Your Account Information</h1>
-        <ul>
+        <ul style='width:100%;'>
             <li><p> Username : {{user.username}}</p></li>
             <li><p> Email : {{user.email}}</p></li>
-            <li><div>
-                <p> Portfolio Acceptable Risk: </p>
-                <input type='range' class='slider' id='slider' min=0 max=100>
-                <p id='slider-output'></p>
-            </div></li>
         </ul>
-        <button type="submit" class="submit">Update Information</button>
+        <form method='POST' class='form'>
+            {% csrf_token %}
+            <ul>
+                <li class='info_item'>
+                    <p> Portfolio Acceptable Risk: </p>
+                    <input type='range' class='slider' id='slider' min=0 max=100 value={{user.risk_level}} name='risk_level'>
+                    <p id='slider-output'></p>
+                </li>
+                <li class='info_item'><p>Ideal Market Portfolio</p><input type='checkbox' class='checkbox' onclick='toggle_slider()' name='ideal'></li>
+            </ul>
+        <button type="submit" class="submit" name='AccountInfo'>Update Information</button>
+        </form>
     </div>
     <div class='larger_container'>
         <h1>Your Blacklist</h1>
@@ -33,7 +39,7 @@
                 {{ form.ticker.label_tag }}
                 {{ form.ticker }}
                 {{ form.ticker.errors }}
-                <button type="submit" class="submit">Submit</button>
+                <button type="submit" class="submit" name='Blacklist'>Submit</button>
             </form>
         </div>
     </div>
@@ -44,11 +50,19 @@
     var output = document.getElementById('slider-output')
     output.innerHTML = slider.value
 
-    slider.oninput = output_value()
-
-    function output_value() {
-        output.innerHTML = slider.value
+    slider.oninput =  function() {
+        output.innerHTML = this.value
     }
+
+    function toggle_slider() {
+        if (slider.disabled) {
+            slider.disabled = false
+        }
+        else{
+            slider.disabled = true
+        }
+    }
+
 </script>
 
 {% endblock %}

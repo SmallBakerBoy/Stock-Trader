@@ -5,14 +5,32 @@
 {% block body %} 
 <h1>Overview</h1>
 <table><tr>
-    <td><div class="container" style="width: 300px; height: 300px;">
+    <td><div class='container' style='width: 300px;'>
         <h1>Assets</h1>
+        {% for assets in assets|slice:':3' %}
+            <li>{{assets.ticker}} - {{assets.amount}}</li>
+        {% endfor %}
+        <a href='{% url 'assets' %}' class='link'> Find out more</a>
     </div></td>
-    <td><div class="container" style="width: 300px; height: 300px;">
+    <td><div class='container' style='width: 300px;'>
         <h1>Watchlist</h1>
+        {% for list in watchlists|slice:':3' %}
+            <li>Watchlist {{list}}</li>
+        {% endfor %}
+        <a href='{% url 'watchlist' %}' class='link'> Find out more</a>
     </div></td>
-    <td><div class="container" style="width: 300px; height: 300px;">
+    <td><div class='container' style='width: 300px;'>
         <h1>Accounts</h1>
+        {% if user.risk_level == -1 %}
+            <p>Ideal Portfolio mode is enabled</p>
+        {% else %}
+            <p>User Risk Level = {{user.risk_level}} </p>
+        {% endif %}
+        <h3> Blacklist </h2>
+        {% for company in blacklisted|slice:':3' %}
+            <li>{{company.ticker}}</li>
+        {% endfor %}
+        <a href='{% url 'account' %}' class='link'> Find out more</a>
     </div></td>
     </tr></table>
 
@@ -21,7 +39,7 @@
     {% if assets or trades %}
         <h1>Suggested Trades</h1>
             <table><tr>
-            <td><div class="container" style="height: 300px; background-color: #dbedd3;">
+            <td><div class='container' style='height: 300px; background-color: #dbedd3;'>
                 <h1>Buy Suggestions</h1>
                 <ul>
                 {% for trade in trades %}
@@ -31,7 +49,7 @@
                 {% endfor %}
                 </ul>
             </div></td>
-            <td><div class="container" style="height: 300px; background-color: #f4cdcc;">
+            <td><div class='container' style='height: 300px; background-color: #f4cdcc;'>
                 <h1>Sell Suggestions</h1>
                 <ul>
                 {% for trade in trades %}
@@ -44,18 +62,18 @@
         </tr></table>
         <form method='POST'>
             {% csrf_token %}
-            <input type="hidden" id="user-id" value="{{ user.id }}">
+            <input type='hidden' id='user-id' value='{{ user.id }}'>
             {{ form.as_p }}
-            <button type="button" class="submit" onclick='update_portfolio()'>Update Portfolio</button>
+            <button type='button' class='submit' onclick='update_portfolio()'>Update Portfolio</button>
             </form>
     {% else %}
         <div class='container'>
             <p> You do not have any registered assets.</p>
             <form method='POST'>
             {% csrf_token %}
-            <input type="hidden" id="user-id" value="{{ user.id }}">
+            <input type='hidden' id='user-id' value='{{ user.id }}'>
             {{ form.as_p }}
-            <button type="button" class="submit" onclick='create_portfolio()'>Create Portfolio</button>
+            <button type='button' class='submit' onclick='create_portfolio()'>Create Portfolio</button>
             </form>
         </div>
     {% endif %}

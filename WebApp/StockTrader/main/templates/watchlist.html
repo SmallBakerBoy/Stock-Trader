@@ -7,23 +7,37 @@
         <div class='sidenav'>
             <ul>
             {% for list in watchlists %}  
-                <li><button type='radio' id='{{list}}' function='switch_watchlist()'> Watchlist {{list}}</button></li>
+                <li class='watchlist_selector'>
+                    <label> Watchlist {{list}}</label>
+                    <input type='radio' id='{{list}}' onclick='switch_watchlist("{{list}}")' name='watchlist_selector' class='watchlist_radio'></input></li>
             {% endfor %}
-            <li><button function='add_watchlist()'> + Add Watchlist</button></li>
+            <li><button onclick='add_watchlist()' class='watchlist_selector'> + Add Watchlist</button></li>
             </ul>
         </div>    
     <ul id='watchlist'>
     {% with current_watchlist=1 %}
     {% for company in watchlist_items %}
         {% if company.watchlist == current_watchlist  %}
+        <li>
             <div class='company'>
                 <h1>{{company.ticker|upper}}</h1>
                 <div class='action'>
-                    <button function='buy()' style='border-radius: 20px; width:100%; grid-column: span 2; cursor: pointer;'>Buy</button>
+                    <button onclick='buy()' style='border-radius: 20px; width:100%; grid-column: span 2; cursor: pointer;'>Buy</button>
             
                 </div>
-                <button function='toggle_dropdown()' class='dropdown'>⌄</button>
+                <button onclick='toggle_dropdown("{{company.ticker|upper}}")' class='dropdown'>⌄</button>
             </div>
+            <div class='dropdown_box' id='{{company.ticker|upper}}-dropdown' hidden> 
+                <div>
+                    <h3> Stock Information </h3>
+                        <div id='{{company.ticker|upper}}-info'></div>
+                    <h3> Indicators </h3>
+                </div>
+                <div>
+                    <iframe frameBorder='0' scrolling='no' width='100%' height='400' src='https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=CED8C4CE4F4E4FF0BDE9C4455A6EE38F&symbol={{company.ticker|upper}}&addVolume=false&dividends=true&splits=true&palette=Financial-Light'></iframe>
+                </div>
+            </div>
+        </li>
         {% endif %}
     {% endfor %}
     {% endwith %}

@@ -7,7 +7,6 @@ from django.conf import settings
 class User(AbstractUser):
     balance = models.DecimalField(default=10000.00,max_digits=12,decimal_places=2)
     risk_level = models.IntegerField(default=50)
-    ideal = models.BooleanField(default=False)
 
 class watchlist_items(models.Model):
     ticker = models.CharField(max_length=5)

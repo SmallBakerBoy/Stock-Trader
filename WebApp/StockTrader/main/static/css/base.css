@@ -74,12 +74,15 @@ li{
     list-style: none;
 }
 
+[hidden] {
+    display: none !important;
+}
+
 .container{
     background-color: #CED4DA;
     border-radius: 40px;
 
     width: 400px;
-    height: 400px;
 
     display: flex;
     flex-direction: column;
@@ -118,12 +121,15 @@ li{
     width:90%;
 
     padding: 10px;
-    margin: 10px;
+
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
 
     border-radius: 10px;
 }
 
-.company h1{
+    .company h1{
     color: #6C757D;
 }
 
@@ -131,10 +137,43 @@ li{
     color: #6C757D;
 }
 
+
+
+.info_item{
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: 5fr 3fr 2fr;
+    justify-content: space-between;
+
+}
+
+.checkbox {
+    width: 50%;
+    height: 50%;
+}
+
 .dropdown{
     border: none;
     background-color: #CED4DA;
     font-size: 50px;
+
+    cursor: pointer;
+}
+
+.dropdown_box {
+    display: grid;
+    grid-template-columns: 3fr 7fr;
+    justify-content: space-between;
+
+    background-color: #CED4DA;
+    width:90%;
+
+    padding: 10px;
+    
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 .submit{
@@ -157,6 +196,20 @@ li{
 
 .submit :hover {
     opacity: 0.9;
+}
+
+.link {
+
+    cursor: pointer;
+    background-color: #1c75ce;
+    color: #ffffff;
+    text-decoration: none;
+
+    border: none;
+    border-radius: 18px;
+
+    margin: 10px;
+    padding: 10px;
 }
 
 .navbar{
@@ -188,6 +241,7 @@ li{
 
 .sidenav{
     display: flex;
+    flex-direction: column;
 
     min-height: 82vh;
     height:100%;
@@ -207,9 +261,9 @@ li{
 
 .sidenav input{
     width: 80%;
-    height: 30px;
-
     margin: 10%;
+
+    height: 30px;
 
 }
 
@@ -228,7 +282,7 @@ li{
     height: 50px;
 }
 
-.sidenav ul button{
+.watchlist_selector{
     width: 100%;
     height: 100%;
 
@@ -238,14 +292,14 @@ li{
     text-align: left;
 }
 
-.sidenav ul button:hover{
-    width: 100%;
-    height: 100%;
+.watchlist_selector:hover{
 
     background-color: #ADB5BD;
+}
 
-    border: none;
-    text-align: left;
+.watchlist_radio{
+    width: 20%;
+    margin: 0px;
 }
 
 
@@ -321,5 +375,19 @@ li{
 
 .action button:hover{
     opacity: 0.9;
+}
+
+#search_results li{
+    width: 100%;
+    height: 100%;
+
+    background-color: #CED4DA;
+
+    border: none;
+    text-align: left;
+}
+
+#search_results li:hover{
+    background-color: #ADB5BD;
 }
 
