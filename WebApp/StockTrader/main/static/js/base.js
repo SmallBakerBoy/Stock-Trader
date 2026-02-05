@@ -27,7 +27,11 @@ function  update(event) {
             headers: {'Content-type':'application/json','X-CSRFToken': csrf()},
             body: JSON.stringify(settings)
     }
-    )
+    ).then(results => {
+        results.json()
+        window.location.reload()
+    })
+    .catch(results => alert(results))
 }
 
 

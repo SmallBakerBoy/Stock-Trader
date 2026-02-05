@@ -48,8 +48,11 @@ def watchlists(request):
 
 def update(request):
     if request.method == 'POST':
-        confirmation = update_asset(request.body)
-        return JsonResponse(confirmation,safe=False)
+        msg,code = update_asset(request.body)
+        if code == 200:
+            return JsonResponse({'success':True})
+        else:
+            return JsonResponse(msg,status=code)
 
 def company(request):
     if request.method == 'POST':
