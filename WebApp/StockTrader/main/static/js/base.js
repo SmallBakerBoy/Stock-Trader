@@ -2,13 +2,26 @@ function csrf() {
     return document.querySelector('[name=csrfmiddlewaretoken]').value;
 }
 
-function  buy() {
-
-}
-
-function  sell() {
+function create_popup(ticker,mode){
     
 }
+
+function  update(event) {
+    event.preventDefault()
+
+    let settings = {type: document.querySelector('input[name="action"]:checked')?.id, 
+                    company: document.getElementById('ticker').value, 
+                    amount: document.getElementById('slider').value, 
+                    user: document.getElementById('user-id').value,
+                }
+    fetch('/update',
+        {method: 'POST',
+            headers: {'Content-type':'application/json','X-CSRFToken': csrf()},
+            body: JSON.stringify(settings)
+    }
+    )
+}
+
 
 function add_watchlist() {
 
@@ -35,7 +48,7 @@ function search_list(results) {
     let html = ''
 
     results.forEach((result) => {
-        html += `<li>${result}</li>`
+        html += `<li><p>${result}</p><button onclick='buy(${result})'>Buy</button></li>`
     })
     list.innerHTML = html
 }
@@ -73,12 +86,12 @@ function display(company_data,name){
 }
 
 function error(element){
-    var info = document.getElementById(element)
+    let info = document.getElementById(element)
     info.innerHTML = '<p>Data could not be retrieved</p>'
 }
 
 function create_portfolio() {
-    var settings = {type: 'create', user: document.getElementById('user-id').value}
+    let settings = {type: 'create', user: document.getElementById('user-id').value}
     fetch('/home/create',
         {method: 'POST',
             headers: {'Content-type':'application/json','X-CSRFToken': csrf()},
@@ -88,7 +101,7 @@ function create_portfolio() {
 }
 
 function update_portfolio() {
-    var settings = {type: 'update', user: document.getElementById('user-id').value}
+    let settings = {type: 'update', user: document.getElementById('user-id').value}
     fetch('/home/create',
         {method: 'POST',
             headers: {'Content-type':'application/json','X-CSRFToken': csrf()},

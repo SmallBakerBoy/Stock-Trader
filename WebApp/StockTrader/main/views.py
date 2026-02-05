@@ -9,6 +9,7 @@ from .forms import CreateAccount,BlacklistCompany
 from .models import blacklist,assets,watchlist_items,trades
 from .Trading_Algorithm.main import queue
 from .Trading_Algorithm.market_data import get_company_info,api_search
+from .Trading_Algorithm.database import update_asset
 
 
 # Create your views here.
@@ -35,7 +36,7 @@ def landing(request):
 
 @login_required(login_url='/login')
 def asset(request):
-    user_asset = assets.objects.filter(user = request.user)                                                                                                                               
+    user_asset = assets.objects.filter(user = request.user)     
     return render(request, 'assets.html',{'assets':user_asset})
 
 
@@ -44,6 +45,11 @@ def watchlists(request):
     watchlist_list = watchlist_items.objects.filter(user = request.user)
     user_watchlists = ((watchlist_list.values_list('watchlist',flat=True)).distinct())
     return render(request, 'watchlist.html',{'watchlists':user_watchlists,'watchlist_items':watchlist_list})
+
+def update(request):
+    if request.method == 'POST':
+        confirmation = update_asset(request.body)
+        return JsonResponse(confirmation)
 
 def company(request):
     if request.method == 'POST':

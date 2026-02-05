@@ -16,7 +16,7 @@
             {% csrf_token %}
             <ul>
                 <li class='info_item'>
-                    <p> Portfolio Acceptable Risk: </p>
+                    <label> Portfolio Acceptable Risk: </label>
                     <input type='range' class='slider' id='slider' min=0 max=100 value={{user.risk_level}} name='risk_level'>
                     <p id='slider-output'></p>
                 </li>

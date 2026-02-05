@@ -3,6 +3,29 @@
 {% block title %} Assets {% endblock %}
 
 {% block body %}
+    <div class='popup'>
+        <h1> Trade </h1>
+        <p id='company'>AAPL</p>
+        <input type='hidden' id='ticker'>
+        <div class='buysell_radio'>
+            <input type='radio' id='buy' name='action'>
+            <label for='buy'>Buy</label>
+
+            <input type='radio' id='sell' name='action'>
+            <label for='sell'>Sell</label>
+        </div>
+        <form method='POST' onsubmit='update(event)'>
+            {% csrf_token %}
+            <input type='hidden' id='user-id' value='{{ user.id }}'>
+            <label> Amount of stock</label>
+            <input type='range' class='slider' id='slider' min=0 max=10 step=0.01 name='amount'>
+            <p id='slider-output'></p>
+            <button type='submit' class='submit' name='buysell'>Submit</button>
+        </form>
+    </div>
+
+
+
     <div class='grid-for-sidebar'>
         <div class='sidenav'> 
             <input type='text' onkeyup='dynamic_search(this.value)' placeholder='Search for company' id='searchbar'>
@@ -16,8 +39,8 @@
             <h1>{{asset.ticker|upper}}</h1>
             <h2>{{asset.amount}} │ ${{asset.price}}</h2>
             <div class='action'>
-                <button onclick='buy()' style='border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: 0.5px solid #ffffff; cursor: pointer;'>Buy</button>
-                <button onclick='sell()' style='border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: 0.5px solid #ffffff; cursor: pointer;'>Sell</button>
+                <button onclick='buy({{asset.ticker|upper}})' style='border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: 0.5px solid #ffffff; cursor: pointer;'>Buy</button>
+                <button onclick='sell({{asset.ticker|upper}})' style='border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: 0.5px solid #ffffff; cursor: pointer;'>Sell</button>
             </div>
             <button onclick='toggle_dropdown("{{asset.ticker|upper}}")' class='dropdown'>⌄</button>
         </div>
@@ -34,6 +57,18 @@
     </li>
     {% endfor %}
     </div>
+
+<script>
+    var slider = document.getElementById('slider')
+    var output = document.getElementById('slider-output')
+    output.innerHTML = slider.value
+
+    slider.oninput =  function() {
+        output.innerHTML = this.value
+    }
+
+
+</script>
 
 {% endblock %}
 

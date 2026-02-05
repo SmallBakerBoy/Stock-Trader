@@ -283,8 +283,12 @@ li{
 }
 
 .watchlist_selector{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+
     width: 100%;
-    height: 100%;
+    height: fit-content;
 
     background-color: #CED4DA;
 
@@ -297,12 +301,46 @@ li{
     background-color: #ADB5BD;
 }
 
+.watchlist_selector label{
+    color: #6C757D;
+
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    width:100%; 
+    height: 100%;
+}
+
 .watchlist_radio{
     width: 20%;
     margin: 0px;
+
+    cursor: pointer;
 }
 
+.watchlist_add{
+    width: 100%;
+    height: 100%;
 
+    background-color: #CED4DA;
+    color: #6C757D;
+    font-family: 'libre-baskerville', serif;
+
+    border: none;
+    text-align: left;
+}
+
+.sidenav ul button:hover{
+    width: 100%;
+    height: 100%;
+
+    background-color: #ADB5BD;
+
+    border: none;
+    text-align: left;
+}
 
 #logo{
     justify-content: center;
@@ -378,9 +416,14 @@ li{
 }
 
 #search_results li{
-    width: 100%;
-    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
 
+    width: 100%;
+    height: fit-content;
+
+    margin-top: 10px;
     background-color: #CED4DA;
 
     border: none;
@@ -389,5 +432,97 @@ li{
 
 #search_results li:hover{
     background-color: #ADB5BD;
+}
+
+#search_results li button{
+    background-color: #1C75CE;
+    color: #ffffff;
+
+    border: 1px solid #ffffff;
+    border-radius: 20px; 
+
+    width:80%; 
+    height: fit-content;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    margin: 3px;
+
+    cursor: pointer;
+}
+
+#search_results li button:hover{
+    opacity: 0.9;
+}
+
+#search_results li p{
+    color: #6C757D;
+
+    text-align: center;
+    align-items: center;
+
+    width:100%; 
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+}
+
+.popup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+    background-color: #E9ECEF;
+
+    border-radius: 10px;
+
+    padding: 1rem 5rem;
+}
+
+.popup h1{
+    color: #6C757D;
+}
+
+.popup label,p{
+    color: #6C757D;
+    text-align: center;
+    padding: 1rem;
+}
+
+.buysell_radio{
+    display: flex;
+
+    border-radius: 10px;
+}
+
+.buysell_radio input{
+    display: none;
+}
+
+.buysell_radio label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    color: #6C757D;
+    background-color: #CED4DA;
+
+    padding: 0.8rem 1.6rem;
+
+
+    cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+    background-color: #1C75CE;
+    color: #ffffff;
 }
 

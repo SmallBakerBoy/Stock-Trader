@@ -8,10 +8,10 @@
             <ul>
             {% for list in watchlists %}  
                 <li class='watchlist_selector'>
-                    <label> Watchlist {{list}}</label>
+                    <label for='{{list}}'> Watchlist {{list}}</label>
                     <input type='radio' id='{{list}}' onclick='switch_watchlist("{{list}}")' name='watchlist_selector' class='watchlist_radio'></input></li>
             {% endfor %}
-            <li><button onclick='add_watchlist()' class='watchlist_selector'> + Add Watchlist</button></li>
+            <li><button onclick='add_watchlist()' class='watchlist_add'> + Add Watchlist</button></li>
             </ul>
         </div>    
     <ul id='watchlist'>
@@ -22,7 +22,7 @@
             <div class='company'>
                 <h1>{{company.ticker|upper}}</h1>
                 <div class='action'>
-                    <button onclick='buy()' style='border-radius: 20px; width:100%; grid-column: span 2; cursor: pointer;'>Buy</button>
+                    <button onclick='buy({{asset.ticker|upper}})' style='border-radius: 20px; width:100%; grid-column: span 2; cursor: pointer;'>Buy</button>
             
                 </div>
                 <button onclick='toggle_dropdown("{{company.ticker|upper}}")' class='dropdown'>⌄</button>
