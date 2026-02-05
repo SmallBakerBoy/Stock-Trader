@@ -1,20 +1,94 @@
 import mysql.connector as mysql
 import datetime
 
+import json
+
+import yfinance as yf
+
 db = mysql.connect(host='localhost',user='root',passwd='kbf6shVLQten8a',database='stocktrader') 
 cursor = db.cursor()
 
 def update_asset(request):
-    print(request)
+    decoded = request.decode('utf-8').replace("'",'"')
+    body = json.loads(decoded)
 
-def buy_asset(user):
-    pass
+    amount = int(body['amount'])
+    company = yf.Ticker(body['company'])
+    
+    if body['type'] == 'sell':
+        sql = 'SELECT main_assets.amount FROM main_assets WHERE user_id LIKE %s AND company = %s'
+        cursor.execute(sql,[body['user'],body['company']])
+        result = int(cursor.fetchone()[0])
 
-def sell_asset(user):
-    pass
+        if amount > result:
+            amount = result
+
+        current_price = company.info.get('currentPrice')
+        return sell_asset(body['user'],amount,current_price,body['company'])
+    
+    elif body['type'] == 'buy':
+        sql = 'SELECT main_user.balance FROM main_user WHERE main_user.id LIKE %s'
+        cursor.execute(sql,[body['user']])
+        balance = int(cursor.fetchone()[0])
+
+        current_price = company.info.get('currentPrice')
+        if current_price*amount > balance:
+            return 'not enough funds'
+        
+        return buy_asset(body['user'],amount,current_price,body['company'])
+
+    else:
+        return 'invalid type'
+
+def buy_asset(user,amount,price,ticker):
+    cost = amount*price
+
+    try:
+        sql = 'SELECT main_assets.amount FROM main_assets WHERE user_id LIKE %s AND company = %s'
+        cursor.execute(sql,[user,ticker])
+        result = int(cursor.fetchone()[0])
+        
+        if not result:
+            sql = 'INSERT INTO main_assets (ticker,amount,price,user_id) VALUES (%s,%s,%s,%s)'
+            cursor.execute(sql,[ticker,amount,price,user])
+        else:
+            sql = 'UPDATE main_assets SET amount = amount + %s WHERE user_id LIKE %s'
+            cursor.execute(sql,[amount,user])
+
+        sql = 'UPDATE main_user SET balance = balance - %s WHERE id LIKE %s'
+        cursor.execute(sql,[cost,user])
+
+        db.commit()
+        return 'success'
+    except:
+        return 'database error'
+
+def sell_asset(user,amount,price,ticker):
+    value = amount*price
+    try:
+        sql = 'SELECT main_assets.amount FROM main_assets WHERE user_id LIKE %s AND company = %s'
+        cursor.execute(sql,[user,ticker])
+        result = int(cursor.fetchone()[0])
+        
+        if result <= amount:
+            sql = 'DELETE FROM main_assets WHERE main_assets WHERE user_id LIKE %s AND company = %s'
+            cursor.execute(sql,[user,ticker])
+        else:
+            sql = 'UPDATE main_assets SET amount = amount - %s WHERE user_id LIKE %s'
+            cursor.execute(sql,[amount,user])
+        
+        db.commit()
+        return 'success'
+    except:
+        return 'database error'
+
+
+    sql = 'UPDATE main_user SET balance = balance + %s WHERE id LIKE %s'
+    cursor.execute(sql,[value,user])
+
 
 def fetch_blacklist(user):
-    sql = 'SELECT main_blacklist.Ticker FROM auth_user INNER JOIN main_blacklist ON auth_user.ID = main_blacklist.user_id WHERE auth_user.ID LIKE %s'
+    sql = 'SELECT main_blacklist.Ticker FROM main_user INNER JOIN main_blacklist ON main_user.ID = main_blacklist.user_id WHERE main_user.ID LIKE %s'
     cursor.execute(sql,[user])
     result = cursor.fetchall()
     for i in range(len(result)):
@@ -22,7 +96,7 @@ def fetch_blacklist(user):
     return result
 
 def get_user_risk(user):
-    sql = 'SELECT risk_level FROM auth_user WHERE auth_user.ID LIKE %s'
+    sql = 'SELECT risk_level FROM main_user WHERE main_user.ID LIKE %s'
     cursor.execute(sql,[user])
     result = cursor.fetchall()
     return result

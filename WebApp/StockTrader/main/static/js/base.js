@@ -3,7 +3,15 @@ function csrf() {
 }
 
 function create_popup(ticker,mode){
-    
+    document.getElementById('popup').hidden = false;
+
+    document.getElementById('selected_company').innerHTML = ticker
+    document.getElementById('ticker').value = ticker
+    document.getElementById(mode).checked = true
+}
+
+function collapse(id){
+    document.getElementById(id).hidden = true;
 }
 
 function  update(event) {
@@ -14,7 +22,7 @@ function  update(event) {
                     amount: document.getElementById('slider').value, 
                     user: document.getElementById('user-id').value,
                 }
-    fetch('/update',
+    fetch('/update/',
         {method: 'POST',
             headers: {'Content-type':'application/json','X-CSRFToken': csrf()},
             body: JSON.stringify(settings)
@@ -48,7 +56,7 @@ function search_list(results) {
     let html = ''
 
     results.forEach((result) => {
-        html += `<li><p>${result}</p><button onclick='buy(${result})'>Buy</button></li>`
+        html += `<li><p>${result}</p><button onclick='create_popup("${result}","buy")'>Buy</button></li>`
     })
     list.innerHTML = html
 }
@@ -97,7 +105,7 @@ function create_portfolio() {
             headers: {'Content-type':'application/json','X-CSRFToken': csrf()},
             body: JSON.stringify(settings)
     }
-    )
+    ).then(response => success())
 }
 
 function update_portfolio() {
@@ -107,6 +115,10 @@ function update_portfolio() {
             headers: {'Content-type':'application/json','X-CSRFToken': csrf()},
             body: JSON.stringify(settings)
     }
-    )
+    ).then(response => success())
+}
+
+function success(){
+    document.getElementById('feedback').innerHTML = 'You have queued a request to update your portfolio, Please come back later to view the suggested trades. Thank you for your patience.'
 }
 

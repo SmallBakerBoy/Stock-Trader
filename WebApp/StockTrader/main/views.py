@@ -49,7 +49,7 @@ def watchlists(request):
 def update(request):
     if request.method == 'POST':
         confirmation = update_asset(request.body)
-        return JsonResponse(confirmation)
+        return JsonResponse(confirmation,safe=False)
 
 def company(request):
     if request.method == 'POST':

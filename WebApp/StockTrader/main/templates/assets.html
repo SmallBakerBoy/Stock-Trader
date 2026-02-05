@@ -3,9 +3,9 @@
 {% block title %} Assets {% endblock %}
 
 {% block body %}
-    <div class='popup'>
-        <h1> Trade </h1>
-        <p id='company'>AAPL</p>
+    <div class='popup' id='popup' hidden>
+        <div class='popup_title_container'><h1> Trade </h1> <button onclick='collapse("popup")' class='dropdown' style='background-color: #E9ECEF; color: #ff0000;'> X </button> </div>
+        <p id='selected_company'>AAPL</p>
         <input type='hidden' id='ticker'>
         <div class='buysell_radio'>
             <input type='radio' id='buy' name='action'>
@@ -39,8 +39,8 @@
             <h1>{{asset.ticker|upper}}</h1>
             <h2>{{asset.amount}} │ ${{asset.price}}</h2>
             <div class='action'>
-                <button onclick='buy({{asset.ticker|upper}})' style='border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: 0.5px solid #ffffff; cursor: pointer;'>Buy</button>
-                <button onclick='sell({{asset.ticker|upper}})' style='border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: 0.5px solid #ffffff; cursor: pointer;'>Sell</button>
+                <button onclick='create_popup("{{asset.ticker|upper}}","buy")' style='border-top-left-radius: 20px; border-bottom-left-radius: 20px; border-right: 0.5px solid #ffffff; cursor: pointer;'>Buy</button>
+                <button onclick='create_popup("{{asset.ticker|upper}}","sell")' style='border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-left: 0.5px solid #ffffff; cursor: pointer;'>Sell</button>
             </div>
             <button onclick='toggle_dropdown("{{asset.ticker|upper}}")' class='dropdown'>⌄</button>
         </div>
@@ -56,6 +56,11 @@
         </div>
     </li>
     {% endfor %}
+
+    <div class='company'>
+        <h1>Remaining Balance : ${{user.balance}}</h1>
+    </div>
+
     </div>
 
 <script>

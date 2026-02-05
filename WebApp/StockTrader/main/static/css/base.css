@@ -92,6 +92,10 @@ li{
     margin: 30px;
 }
 
+.container p{
+    color: #ffffff;
+}
+
 .larger_container{
     background-color: #CED4DA;
     border-radius: 40px;
@@ -155,7 +159,9 @@ li{
 
 .dropdown{
     border: none;
+
     background-color: #CED4DA;
+    color: #6C757D;
     font-size: 50px;
 
     cursor: pointer;
@@ -194,7 +200,7 @@ li{
     font-size: 1rem;
 }
 
-.submit :hover {
+.submit:hover {
     opacity: 0.9;
 }
 
@@ -212,6 +218,10 @@ li{
     padding: 10px;
 }
 
+.link:hover{
+    opacity: 0.9;
+}
+
 .navbar{
     width: 100%;
     height: 9vh;
@@ -222,6 +232,10 @@ li{
     position: sticky;
 
     background-color: #6C757D;
+}
+
+.navbar p{
+    color: #ffffff;
 }
 
 .grid-for-sidebar{
@@ -473,17 +487,31 @@ li{
     cursor: pointer;
 }
 
+.popup_title_container{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+
+    width: 100%;
+
+    justify-content: space-between;
+}
+
 .popup{
+    position: fixed;
+    top: 25vh;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
 
+    min-width: 30vw;
 
     background-color: #E9ECEF;
 
     border-radius: 10px;
+    padding: 1rem 1rem;
 
-    padding: 1rem 5rem;
+    z-index: 1;
 }
 
 .popup h1{
@@ -498,6 +526,7 @@ li{
 
 .buysell_radio{
     display: flex;
+    justify-content: center;
 
     border-radius: 10px;
 }

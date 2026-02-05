@@ -39,6 +39,7 @@ def get_company_info(data):
 
         ticker = yf.Ticker(body['ticker'])
         company_data = ticker.history().iloc[-1]
+        company_data = company_data.round(2)
 
         if type(company_data) == None:
             raise Exception

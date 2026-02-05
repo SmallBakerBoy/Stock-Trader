@@ -66,6 +66,7 @@
             {{ form.as_p }}
             <button type='button' class='submit' onclick='update_portfolio()'>Update Portfolio</button>
             </form>
+            <p id='feedback'></p>
     {% else %}
         <div class='container'>
             <p> You do not have any registered assets.</p>
@@ -75,6 +76,7 @@
             {{ form.as_p }}
             <button type='button' class='submit' onclick='create_portfolio()'>Create Portfolio</button>
             </form>
+            <p id='feedback'></p>
         </div>
     {% endif %}
 
