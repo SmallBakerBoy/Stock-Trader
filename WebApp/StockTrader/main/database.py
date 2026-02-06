@@ -99,15 +99,25 @@ def fetch_blacklist(user):
         result[i]=result[i][0]
     return result
 
+def fetch_balance(user):
+    sql = 'SELECT balance FROM main_user WHERE main_user.ID LIKE %s'
+    cursor.execute(sql,[user])
+    result = float(cursor.fetchone()[0])
+    return result
+
 def get_user_risk(user):
     sql = 'SELECT risk_level FROM main_user WHERE main_user.ID LIKE %s'
     cursor.execute(sql,[user])
-    result = cursor.fetchall()
+    result = int(cursor.fetchone()[0])
     return result
 
 def save_trades(user,trades):
-    sql = 'INSERT INTO main_trades (ticker,type,amount,user_id,time) VALUES (%s,%s,%s,%s,%s)'
-    for trade in trades:
-        cursor.execute(sql,[trade[0],1,trade[1],user,datetime.datetime.now()])
-    db.commit()
+    try:
+        sql = 'INSERT INTO main_trades (ticker,type,amount,user_id,time) VALUES (%s,%s,%s,%s,%s)'
+        for trade in trades:
+            cursor.execute(sql,[trade[0],1,trade[1],user,datetime.datetime.now()])
+        db.commit()
+        return 'OK',200
+    except:
+        return 'database error',500
 

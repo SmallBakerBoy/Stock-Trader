@@ -35,8 +35,13 @@ function  update(event) {
 }
 
 
-function add_watchlist() {
-
+function add_watchlist(list) {
+    let settings = {'selected':list}
+    fetch('/update/',
+            {method: 'POST',
+                headers: {'Content-type':'application/json','X-CSRFToken': csrf()},
+                body: JSON.stringify(settings),
+        })
 }
 
 function switch_watchlist() {

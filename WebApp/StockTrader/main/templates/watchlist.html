@@ -36,9 +36,8 @@
             </ul>
         </div>    
     <ul id='watchlist'>
-    {% with current_watchlist=1 %}
     {% for company in watchlist_items %}
-        {% if company.watchlist == current_watchlist  %}
+        {% if company.watchlist == selected  %}
         <li>
             <div class='company'>
                 <h1>{{company.ticker|upper}}</h1>
@@ -61,7 +60,6 @@
         </li>
         {% endif %}
     {% endfor %}
-    {% endwith %}
     </ul>
     </div>
 

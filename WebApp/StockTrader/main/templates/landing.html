@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='{% static "css/base.css" %}'>
+    <script src='{% static "js/base.js" %}'></script>
     <title>Asset Manager</title>
+    <link rel="icon" type="image/x-icon" href="{% static favicon.png %}">
 </head>
 <body>
     <h1>Hello There!</h1>
-    <a href="/login">Continue to Login</a>
-    <a href="/signup">New? Sign up instead</a>
+    <p style='color: #fff;'>Get the maximum return from your savings with minimum effort using our trading algorithm which analyses live data to create a personalised portfolio that suits your needs</p>
+    <a href="/login" class='link'>Continue to Login</a>
+    <a href="/signup" class='link'>New? Sign up instead</a>
 </body>
 </html>

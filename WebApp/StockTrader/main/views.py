@@ -7,9 +7,9 @@ from django.views.decorators.csrf import csrf_protect
 
 from .forms import CreateAccount,BlacklistCompany
 from .models import blacklist,assets,watchlist_items,trades
-from .Trading_Algorithm.main import queue
-from .Trading_Algorithm.market_data import get_company_info,api_search
-from .Trading_Algorithm.database import update_asset
+from .tasks import enqueue
+from .market_data import get_company_info,api_search
+from .database import update_asset
 
 
 # Create your views here.
@@ -27,7 +27,7 @@ def home(request):
 def create_portfolio(request):
     if request.method=='POST':
         settings = request.body
-        queue(settings)
+        enqueue(settings)
     return redirect('/home')
 
 def landing(request):
@@ -44,7 +44,10 @@ def asset(request):
 def watchlists(request):
     watchlist_list = watchlist_items.objects.filter(user = request.user)
     user_watchlists = ((watchlist_list.values_list('watchlist',flat=True)).distinct())
-    return render(request, 'watchlist.html',{'watchlists':user_watchlists,'watchlist_items':watchlist_list})
+    if request.method == 'POST':
+        selected = (request.body)['watchlist']
+        return render(request, 'watchlist.html',{'watchlists':user_watchlists,'watchlist_items':watchlist_list,'selected':selected})
+    return render(request, 'watchlist.html',{'watchlists':user_watchlists,'watchlist_items':watchlist_list,'selected':1})
 
 def update(request):
     if request.method == 'POST':

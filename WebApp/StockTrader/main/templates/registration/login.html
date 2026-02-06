@@ -24,12 +24,12 @@
             <div class="form">
                 {{ form.password.label_tag }}
                 {{ form.password }}
-                <span><a class="link">Forgot Password?</a></span>
                 {{ form.password.errors }}
             </div>
+             <span><a class='login_link' href='/password_reset'>Forgot Password?</a></span>
 
             <button type="submit" class="submit">Submit</button>
-            <span><a class="link" href='/signup'>Don't Have an account? Create one</a></span>
+            <span><a class='login_link' href='/signup'>Don't Have an account? Create one</a></span>
         </form>
         {% endif %}
     </div>

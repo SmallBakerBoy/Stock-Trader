@@ -1,14 +1,18 @@
 from .market_data import get_sp500,get_market_data,format_market_data
-from .database import get_user_risk,fetch_blacklist,save_trades
+from .database import get_user_risk,fetch_blacklist,fetch_balance,save_trades
 
 import pandas as pd
 import json
+
+import time
 
 import numpy as np
 import yfinance as yf
 
 import sklearn.cluster as sk
 import cvxpy as cp
+
+from celery import shared_task
 
 #Calculates the beta of a single company
 def calc_beta(data,company):
@@ -109,11 +113,20 @@ def weight_conversion(data,weights,budget):
         investments.append(stock)
     return investments
 
-def queue(settings):
+def enqueue(settings):
     decoded = settings.decode('utf-8').replace("'",'"')
     body = json.loads(decoded)
-    return 'OK',200
 
+    if body['type'] == 'create':
+        create_portfolio.delay(body['user'])
+        return 'OK',200
+    elif body['type'] == 'update':
+        update_portfolio.delay(body['user'])
+        return 'OK',200
+    else:
+        return 'invalid type',400
+
+@shared_task
 def create_portfolio(user):
     SP500 = list(get_sp500().values())
     blacklist = fetch_blacklist(user)
@@ -127,8 +140,6 @@ def create_portfolio(user):
     clusters = create_clusters(market_data_pct,components,8)
     companies = select_companies(market_data_pct,clusters,25)
 
-    
-    return companies
     #Converts risk from percentage to a value between 0 and 2 for beta
     risk_max = get_user_risk() / 50
 
@@ -140,14 +151,16 @@ def create_portfolio(user):
     objective = cp.Maximize(s)
     constraints = [b <= risk_max]
 
+    weights = 0
+    trades = weight_conversion(weights,fetch_balance(user))
 
-    def update_portfolio(user):
-        pass
+    return save_trades(user,trades)
 
-'''companies = list(get_sp500().values())
-market_data_raw = get_market_data(companies)
-market_data_pct = format_market_data(market_data_raw)
+@shared_task
+def update_portfolio(user):
+    print('Doing Task')
+    time.sleep(10)
+    return 'DONE'
 
-weights = [['AAPL',0.12],['NVDA',0.32],['AMZN',0.36],['PLTR',0.2]]
-trades = weight_conversion(market_data_raw,weights,10000)
-print(save_trades(2,trades))'''
+
+
